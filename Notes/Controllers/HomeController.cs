@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Notes.Models;
+using Notes.Models.ViewModels;
 using System.Diagnostics;
 
 namespace Notes.Controllers

@@ -29,6 +29,7 @@ namespace Notes.Controllers
             if (search != null && search.Length > maxSearchLength)
                 return RedirectToAction(nameof(Error), new { message = $"The search term for the category title cannot exceed {maxSearchLength} characters." });
 
+            ViewData["CurrentFilter"] = search ?? "";
             return View(await _categoryService.SearchAsync(search));
         }
 

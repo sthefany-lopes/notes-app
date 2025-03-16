@@ -3,12 +3,12 @@
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">@ViewData["Title"]</h1>
-<h2 class="text-danger">@Model.Message</h2>
-
-@if (Model.ShowRequestId)
-{
-        <p>
-            <strong>Request ID:</strong> <code>@Model.RequestId</code>
-        </p>
-}
+<!-- Main Content -->
+<div class="main-content container">
+    <h1 class="display-4 mb-4 text-error">@ViewData["Title"]</h1>
+    <p class="mb-0"><span class="fw-bold">Description:</span> @Model.Message</p>
+    @if (Model.ShowRequestId)
+    {
+        <p class="mt-4 mb-0"><span class="fw-bold">Request ID:</span> <code class="px-2 py-1 text-error">@Model.RequestId</code></p>
+    }
+</div>

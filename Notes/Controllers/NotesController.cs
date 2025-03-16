@@ -31,6 +31,7 @@ namespace Notes.Controllers
             if (search != null && search.Length > maxSearchLength)
                 return RedirectToAction(nameof(Error), new { message = $"The search term for the note title cannot exceed {maxSearchLength} characters." });
 
+            ViewData["CurrentFilter"] = search ?? "";
             return View(await _noteService.SearchAsync(search));
         }
 

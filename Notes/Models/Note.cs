@@ -6,11 +6,11 @@ namespace Notes.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "The {0} field is required.")]
-        [StringLength(60, MinimumLength = 3, ErrorMessage = "The {0} field must be between {2} and {1} characters in length.")]
+        [Required(ErrorMessage = "The title field is required.")]
+        [StringLength(60, MinimumLength = 3, ErrorMessage = "The title field must be between {2} and {1} characters in length.")]
         public string Title { get; set; }
 
-        [StringLength(10000, ErrorMessage = "The {0} field must be at most {1} characters in length.")]
+        [StringLength(10000, ErrorMessage = "The content field must be at most {1} characters in length.")]
         public string? Content { get; set; }
 
         [Display(Name = "Created At")]

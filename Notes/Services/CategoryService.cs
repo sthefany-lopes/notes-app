@@ -59,9 +59,15 @@ namespace Notes.Services
             if (existingCategory != null && existingCategory.Id != updatedCategory.Id)
                 return;
 
+            var trackedCategory = await _context.Category.FindAsync(updatedCategory.Id);
+
             try
             {
-                _context.Update(updatedCategory);
+                if (trackedCategory != null)
+                    _context.Entry(trackedCategory).CurrentValues.SetValues(updatedCategory);
+                else
+                    _context.Update(updatedCategory);
+
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException exception)

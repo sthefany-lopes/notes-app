@@ -1,59 +1,84 @@
-﻿@model IEnumerable<Notes.Models.Note>
+﻿@using Notes.Extensions
+@model IEnumerable<Notes.Models.Note>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Notes";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @item.CreatedAt.ToLocalTime().ToString("G")
-            </td>
-            <td>
-                @item.UpdatedAt.ToLocalTime().ToString("G")
-            </td>
-            <td>
-                @(item.Category != null ? item.Category.Name : "No Category")
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<!-- Main Content -->
+<div class="main-content container">
+    <h1 class="display-4 mb-4">@ViewData["Title"]</h1>
+    <!-- Create New Note Button -->
+    <div class="button-area mb-4">
+        <a class="main-content-button" asp-action="Create">Create new</a>
+    </div>
+    <!-- Table -->
+    <div class="table-responsive">
+        <table class="table table-borderless mb-0">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Content)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreatedAt)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UpdatedAt)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Category)
+                    </th>
+                    <th>
+                        <!-- Search Form -->
+                        <form asp-action="Index" method="get" class="d-flex justify-content-end search-form">
+                            <input class="form-control me-2 search-input" placeholder="Search title" autocomplete="off" aria-label="Search" name="search" value="@ViewData["CurrentFilter"]">
+                            <button class="btn" type="submit">
+                                <img class="search-icon" src="../images/search.svg" alt="Search icon" />
+                            </button>
+                        </form>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @item.Title.Cut(20)
+                        </td>
+                        <td>
+                            @(item.Content != null ? item.Content.Cut(20) : "")
+                        </td>
+                        <td>
+                            @item.CreatedAt.ToLocalTime().ToString("G")
+                        </td>
+                        <td>
+                            @item.UpdatedAt.ToLocalTime().ToString("G")
+                        </td>
+                        <td>
+                            @(item.Category != null ? item.Category.Name.Cut(20) : "No Category")
+                        </td>
+                        <td>
+                            <!-- Edit, Details, and Delete Buttons -->
+                            <div class="d-flex justify-content-end gap-2">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn custom-edit-button custom-button">Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn custom-details-button custom-button">Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn custom-delete-button custom-button">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
